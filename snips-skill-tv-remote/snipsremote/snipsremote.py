@@ -36,6 +36,4 @@ class SnipsRemote:
 
 
 if (__name__ == "__main__"):
-    c= SnipsRemote(); #deleted c=
-    c.go("menu")
-    c.go("back")
+    SnipsRemote();
