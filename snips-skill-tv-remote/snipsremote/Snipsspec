@@ -1,0 +1,20 @@
+package_name: Snips Remote Control
+class_name: Snips Remote Control
+description: tv remote Snips skill
+intents:
+  - intent: go
+    action: |
+      {%
+      button = None
+      if len(snips.intent.button):
+        button = int(snips.intent.button[0])
+      snips.skill.go(button)
+      %}
+  - intent: diaporama
+    action: diaporama
+  - intent: next
+    action: next
+  - intent: previous
+    action: previous
+  - intent: stop_diaporama
+    action: stop_diaporama

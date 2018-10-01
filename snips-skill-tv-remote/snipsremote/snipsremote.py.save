@@ -1,0 +1,49 @@
+# coding: utf8
+import smbus2
+import time
+import os
+from os.path import expanduser
+import subprocess
+import sys
+
+class SnipsRemote:
+    @classmethod
+    def __init__(self, locale = "EN_US"):
+        pass
+
+    @staticmethod
+    def send_value(s):
+        if (s is None or s == ""):
+            return
+        dir = expanduser("/home/pi") + u'/rm3_mini_controller/'
+        if (not os.path.isdir(dir)):
+            return
+        print(text_value)
+        p = subprocess.Popen(['python', u'BlackBeanControl.py', '-c', s], cwd=dir)
+        p.wait()
+        time.sleep(20)
+
+    @classmethod
+    def go(self, button):
+        SnipsRemote.send_value(button)
+
+    @classmethod
+    def diaporama(self):
+        SnipsRemote.send_value("")
+
+    @classmethod
+    def stop_diaporama(self):
+        SnipsRemote.send_value("stop")
+
+    @classmethod
+    def previous(self):
+        SnipsRemote.send_value("previous")
+
+    @classmethod
+    def next(self):
+        SnipsRemote.send_value("previous")
+
+if (__name__ == "__main__"):
+    c = SnipsRemote();
+    c.go("menu")
+    c.go("back")
