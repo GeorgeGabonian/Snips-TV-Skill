@@ -15,39 +15,6 @@ import subprocess
 from os.path import expanduser
 
 
-class SnipsRemote:
-    @classmethod
-    def __init__(self, locale = "EN_US"):
-        pass
-
-    @staticmethod
-    def send_value(s):
-        if (s is None or s == ""):
-            return
-        dir = expanduser("/home/pi") + u'/rm3_mini_controller/'
-        if (not os.path.isdir(dir)):
-            return
-            print(text_value)
-        p = subprocess.Popen(['python', u'BlackBeanControl.py', '-c', s], cwd=dir)
-        p.wait()
-        time.sleep(20)
-
-    @staticmethod
-    def rekey_value(s):
-        if (s is None or s == ""):
-            return
-        dir = expanduser("/home/pi") + u'/rm3_mini_controller/'
-        if (not os.path.isdir(dir)):
-            return
-            print(text_value)
-        p = subprocess.Popen(['python', u'BlackBeanControl.py', '-r', s], cwd=dir)
-        p.wait()
-        time.sleep(20)
-
-
-
-
-
 
 
 #Changing DIR to parse registered commands:
@@ -185,10 +152,7 @@ def channeldown(hermes, intent_message):
     SnipsRemote.send_value("ChannelDOWN")
 
 def volumeup(hermes, intent_message):
-    x = int(intent_message.slots.Numbers)
-    print(x)
-    for i in range (0,x):
-    	SnipsRemote.send_value("Volume up")
+    SnipsRemote.send_value("Volume up")
 
 def turnoffon(hermes, intent_message):
     SnipsRemote.send_value("turnoffon")
