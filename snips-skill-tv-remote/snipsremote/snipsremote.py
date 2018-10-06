@@ -18,10 +18,10 @@ Config.optionxform = str
 
 class VocalConfig:
         def __init__(self):
-            pass
-
+                pass
+        #getting and assigning your Broadlink's IP & MAC addresses + port vocally.
         @staticmethod
-        def auto_setup_BBC_ini():
+        def auto_setup_BlackBeanControl_ini():
                 print('Scanning network for Broadlink devices (5s timeout) ... ')
                 devices = broadlink.discover(timeout=5)
                 print(('Found ' + str(len(devices )) + ' broadlink device(s)'))
@@ -52,11 +52,6 @@ class VocalConfig:
                         f.close()
 
 
-
-
-
-
-
 class SnipsRemote:
     @classmethod
     def __init__(self, locale = "EN_US"):
@@ -71,10 +66,11 @@ class SnipsRemote:
             return
             print(text_value)
         p = subprocess.Popen(['python', u'BlackBeanControl.py', '-c', s], cwd=dir)
-        p.wait()
-        time.sleep(20)
+        time.sleep(1.2)
 
-    @staticmethod
+
+    #I excluded rekeying, since I realized relean_value could be used instead. However, I did not delete it entirely 'cause some people may have to use it.
+    """@staticmethod
     def rekey_value(s):
         if (s is None or s == ""):
             return
@@ -85,8 +81,59 @@ class SnipsRemote:
         p = subprocess.Popen(['python', u'BlackBeanControl.py', '-r', s], cwd=dir)
         p.wait()
         time.sleep(20)
+   """
+
+    @staticmethod
+    def relearn_value(The_name_of_the_button):
+
+        #Turning on Learning Mode:
+        print("enter_learning (5s timeout) please press any key on remote to test")
+        devices = broadlink.discover(timeout=5)
+        for index, item in enumerate(devices):
+                devices[index].auth()
+        devices[0].enter_learning()
+        time.sleep(7)
+        print("Check data")
+        ir_packet = devices[0].check_data()
+        if ir_packet:
+                decode_command = binascii.hexlify(ir_packet).decode("ascii")
+                print(decode_command)
+                encode_command = binascii.unhexlify(decode_command)
+                devices[0].send_data(encode_command) #Retesting if it works.
+                print("Test resend")
+        else:
+                print("RM3 not receive any remote command")
+
+        #Replacing the former option's key in the config file
+        os.chdir("/home/pi/rm3_mini_controller/")
+        with open('BlackBeanControl.ini','r+') as f:
+                print('in the file')
+                print(Config.read('BlackBeanControl.ini'))
+                print(Config.options('Commands'))
+                Config.set("Commands", The_name_of_the_button, decode_command)
+                Config.write(f)
+                f.close()
+
+
+
+class VolumeManip:
+        def __init__(self):
+                pass
+
+        #I seperated them for legibility purposes.
+        @staticmethod
+        def how_much_up(the_number_to_iterate):
+                for i in range (0,int(the_number_to_iterate)):
+                        SnipsRemote.send_value("Volume up")
+
+        @staticmethod
+        def how_much_down(the_number_to_iterate):
+                for i in range (0,int(the_number_to_iterate)):
+                        SnipsRemote.send_value("Volume down")
+
+
+
 
 
 if (__name__ == "__main__"):
-    SnipsRemote();
-    
+     SnipsRemote();
