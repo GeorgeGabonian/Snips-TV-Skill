@@ -84,9 +84,6 @@ def volumedown(hermes, intent_message):
 def Mutebutton(hermes, intent_message):
     SnipsRemote.send_value("Mutebutton")
 
-def turnoffon(hermes, intent_message):
-    SnipsRemote.send_value("turn")
-
 #This Skill searches for the necessary info.  and fills it in the config file.
 def entering_test_mode(hermes, intent_message):
     VocalConfig.auto_setup_BlackBeanControl_ini()
@@ -94,15 +91,39 @@ def entering_test_mode(hermes, intent_message):
 #This Skill allows relearn a button if it isn't working, or if you "mis-pressed" accidentally.  
 def learningmode(hermes, intent_message):
     SnipsRemote.relearn_value(intent_message.slots.button_name.first().value) 
+    sentence = "button remapped"
+    hermes.publish_end_session(intent_message.session_id, sentence)
 
 def Menu(hermes, intent_message):
     SnipsRemote.send_value("Menu")
+    hermes.publish_end_session(intent_message.session_id, "Hello Smart World")
+	
+def SmartHub(hermes, intent_message):
+    SnipsRemote.send_value("SmartHub")
+    hermes.publish_end_session(intent_message.session_id, "Hello Smart World")	
+    
+def turnoff(hermes, intent_message):
+    SnipsRemote.send_value("turnoff")
+    hermes.publish_end_session(intent_message.session_id, "turning off TV")	
 
+def turnon(hermes, intent_message):
+    SnipsRemote.send_value("turnon")
+    hermes.publish_end_session(intent_message.session_id, "turning TV on")
+	
+def rightbutton(hermes, intent_message):
+    SnipsRemote.send_value("rightbutton")
+    hermes.publish_end_session(intent_message.session_id, "Goes right")
+
+def leftbutton(hermes, intent_message):
+    SnipsRemote.send_value("leftbutton")
+    hermes.publish_end_session(intent_message.session_id, "Goes right lol")
+	
 if __name__ == "__main__":
     with Hermes(MQTT_ADDR) as h:
        h.subscribe_intent("GabonV23:ChannelUP", channelup) \
         .subscribe_intent("GabonV23:ChannelDown", channeldown) \
-        .subscribe_intent("GabonV23:ONOFF", turnoffon) \
+        .subscribe_intent("GabonV23:turnon", turnon) \
+	.subscribe_intent("GabonV23:turnoff", turnoff) \
         .subscribe_intent("GabonV23:volumedown", volumedown) \
         .subscribe_intent("GabonV23:Mutebutton",Mutebutton ) \
         .subscribe_intent("GabonV23:volumeup", volumeup) \
