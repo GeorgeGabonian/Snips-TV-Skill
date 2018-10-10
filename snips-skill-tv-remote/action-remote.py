@@ -3,6 +3,8 @@
 
 import ConfigParser
 from snipsremote.snipsremote import SnipsRemote
+from snipsremote.snipsremote import VolumeManip
+from snipsremote.snipsremote import VocalConfig
 from hermes_python.hermes import Hermes
 import io
 import Queue
@@ -96,7 +98,7 @@ def learningmode(hermes, intent_message):
 
 def Menu(hermes, intent_message):
     SnipsRemote.send_value("Menu")
-    hermes.publish_end_session(intent_message.session_id, "Hello Smart World")
+    hermes.publish_end_session(intent_message.session_id, "Menu")
 	
 def SmartHub(hermes, intent_message):
     SnipsRemote.send_value("SmartHub")
@@ -118,6 +120,22 @@ def leftbutton(hermes, intent_message):
     SnipsRemote.send_value("leftbutton")
     hermes.publish_end_session(intent_message.session_id, "Goes right lol")
 	
+def source(hermes, intent_message):
+    SnipsRemote.send_value("SourceButton")
+    hermes.publish_end_session(intent_message.session_id, "Yup")
+
+def factoryreset(hermes, intent_message):
+    if intent_message.slots.YESNO.first().value == "Yes":
+        VocalConfig.auto_setup_BlackBeanControl_ini()
+        hermes.publish_end_session(intent_message.session_id, "reseted the device")
+    else:
+        hermes.publish_end_session(intent_message.session_id, "You succesfully cancelled factory reset")
+
+def enterbutton(hermes, intent_message):
+    SnipsRemote.send_value("Enter")
+    hermes.publish_end_session(intent_message.session_id, "gotcha")
+	
+	
 if __name__ == "__main__":
     with Hermes(MQTT_ADDR) as h:
        h.subscribe_intent("GabonV23:ChannelUP", channelup) \
@@ -133,4 +151,7 @@ if __name__ == "__main__":
         .subscribe_intent("GabonV23:rightbutton", rightbutton) \
         .subscribe_intent("GabonV23:leftbutton", leftbutton) \
         .subscribe_intent("GabonV23:Menu", Menu) \
+	.subscribe_intent("GabonV23:FactoryReset", factoryreset) \
+        .subscribe_intent("GabonV23:SourceButton", source) \
+	.subscribe_intent("GabonV23:EnterButton", enterbutton) \
         .loop_forever()
