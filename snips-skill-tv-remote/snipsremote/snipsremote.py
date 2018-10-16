@@ -9,7 +9,7 @@ from configparser import ConfigParser
 import broadlink 
 import re
 import binascii
-
+from collections import OrderedDict
 
 
 
@@ -37,13 +37,12 @@ class VocalConfig:
 
 
 
-
-                Config['General'] = {
-                                "IPAddress":ipadd,
-                                'Port':port,
-                                'MACAddress':macadd,
-                                'Timeout':'20'
-                }
+                Config['General'] = OrderedDict([
+                                ("IPAddress", ipadd),
+                                ('Port', port),
+                                ('MACAddress', macadd),
+                                ('Timeout','20')
+                ])
                 Config['Commands'] = {
                 }
                 os.chdir("/home/pi/rm3_mini_controller/")
