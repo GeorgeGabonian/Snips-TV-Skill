@@ -45,7 +45,7 @@ class VocalConfig:
                 ])
                 Config['Commands'] = {
                 }
-                os.chdir("/home/pi/rm3_mini_controller/")
+                os.chdir("/var/lib/snips/skills/Snips-TV-Skill/rm3_mini_controller")
                 with open('BlackBeanControl.ini','w') as f:
                         Config.write(f)
                         f.close()
@@ -60,7 +60,7 @@ class SnipsRemote:
     def send_value(s):
         if (s is None or s == ""):
             return
-        dir = expanduser("/home/pi") + u'/rm3_mini_controller/'
+        dir = expanduser("/var/lib/snips/skills/Snips-TV-Skill/rm3_mini_controller")
         if (not os.path.isdir(dir)):
             return
             print(text_value)
@@ -73,7 +73,7 @@ class SnipsRemote:
     def rekey_value(s):
         if (s is None or s == ""):
             return
-        dir = expanduser("/home/pi") + u'/rm3_mini_controller/'
+        dir = expanduser("/var/lib/snips/skills/Snips-TV-Skill/rm3_mini_controller")
         if (not os.path.isdir(dir)):
             return
             print(text_value)
@@ -104,7 +104,7 @@ class SnipsRemote:
                 print("RM3 not receive any remote command")
 
         #Replacing the former option's key in the config file
-        os.chdir("/home/pi/rm3_mini_controller/")
+        os.chdir("/var/lib/snips/skills/Snips-TV-Skill/rm3_mini_controller")
         with open('BlackBeanControl.ini','r+') as f:
                 print('in the file')
                 print(Config.read('BlackBeanControl.ini'))
