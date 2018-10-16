@@ -65,7 +65,7 @@ class SnipsRemote:
             return
             print(text_value)
         p = subprocess.Popen(['python', u'BlackBeanControl.py', '-c', s], cwd=dir)
-        time.sleep(1.2)
+        time.sleep(0.5)
 
 
     #I excluded rekeying, since I realized relean_value could be used instead. However, I did not delete it entirely 'cause some people may have to use it.
@@ -122,12 +122,12 @@ class VolumeManip:
         #I seperated them for legibility purposes.
         @staticmethod
         def how_much_up(the_number_to_iterate):
-                for i in range (0,int(the_number_to_iterate)):
+                for i in range (1,int(the_number_to_iterate)):
                         SnipsRemote.send_value("Volume up")
 
         @staticmethod
         def how_much_down(the_number_to_iterate):
-                for i in range (0,int(the_number_to_iterate)):
+                for i in range (1,int(the_number_to_iterate)):
                         SnipsRemote.send_value("Volume down")
 
 
