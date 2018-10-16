@@ -105,7 +105,7 @@ def SmartHub(hermes, intent_message):
     hermes.publish_end_session(intent_message.session_id, "Hello Smart World")	
     
 def turnoff(hermes, intent_message):
-    SnipsRemote.send_value("turnoff")
+    SnipsRemote.send_value("turn off")
     hermes.publish_end_session(intent_message.session_id, "turning off TV")	
 
 def turnon(hermes, intent_message):
@@ -140,8 +140,8 @@ if __name__ == "__main__":
     with Hermes(MQTT_ADDR) as h:
        h.subscribe_intent("GabonV23:ChannelUP", channelup) \
         .subscribe_intent("GabonV23:ChannelDown", channeldown) \
-        .subscribe_intent("GabonV23:turnon", turnon) \
-	.subscribe_intent("GabonV23:turnoff", turnoff) \
+        .subscribe_intent("GabonV23:Turnon", turnon) \
+	.subscribe_intent("GabonV23:Turnoff", turnoff) \
         .subscribe_intent("GabonV23:volumedown", volumedown) \
         .subscribe_intent("GabonV23:Mutebutton",Mutebutton ) \
         .subscribe_intent("GabonV23:volumeup", volumeup) \
