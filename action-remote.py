@@ -154,4 +154,5 @@ if __name__ == "__main__":
 	.subscribe_intent("GabonV23:FactoryReset", factoryreset) \
         .subscribe_intent("GabonV23:SourceButton", source) \
 	.subscribe_intent("GabonV23:EnterButton", enterbutton) \
+	.subscribe_intent("GabonV23:SmartHub", SmartHub) \
         .loop_forever()
